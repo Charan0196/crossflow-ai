@@ -18,29 +18,33 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
+    
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: contracts/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     
     - name: Install dependencies
-      run: |
-        cd contracts
-        npm install
+      working-directory: ./contracts
+      run: npm install
     
     - name: Compile contracts
-      run: |
-        cd contracts
-        npm run compile
+      working-directory: ./contracts
+      run: npm run compile
       continue-on-error: true
     
     - name: Run tests
-      run: |
-        cd contracts
-        npm run test
+      working-directory: ./contracts
+      run: npm run test
       continue-on-error: true
     
     - name: Run coverage
-      run: |
-        cd contracts
-        npm run coverage
+      working-directory: ./contracts
+      run: npm run coverage
       continue-on-error: true
     
     - name: Upload coverage to Codecov
@@ -61,22 +65,27 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
+    
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: contracts/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     
     - name: Install dependencies
-      run: |
-        cd contracts
-        npm install
+      working-directory: ./contracts
+      run: npm install
     
     - name: Install Slither
-      run: |
-        pip3 install slither-analyzer
+      run: pip3 install slither-analyzer
       continue-on-error: true
     
     - name: Run Slither analysis
-      run: |
-        cd contracts
-        slither . --print human-summary
+      working-directory: ./contracts
+      run: slither . --print human-summary
       continue-on-error: true
 
   deploy-testnet:
@@ -90,17 +99,23 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
+    
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: contracts/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     
     - name: Install dependencies
-      run: |
-        cd contracts
-        npm install
+      working-directory: ./contracts
+      run: npm install
     
     - name: Deploy to Sepolia
-      run: |
-        cd contracts
-        npm run deploy:sepolia
+      working-directory: ./contracts
+      run: npm run deploy:sepolia
       env:
         ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
