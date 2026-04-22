@@ -1,0 +1,535 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CrossFlow AI Professional Style Base */
+@layer base {
+  html {
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  body {
+    @apply bg-[#030712] text-white antialiased;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Professional Animations */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+}
+
+@keyframes pulse-green {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% { 
+    opacity: 0.8;
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Custom Animations */
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s infinite;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* GoodCrypto Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1419;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+::-webkit-scrollbar-corner {
+  background: #0f1419;
+}
+
+/* Professional Components */
+@layer components {
+  /* GoodCrypto Button Styles */
+  .btn-goodcrypto {
+    @apply bg-green-500 hover:bg-green-600 text-black font-bold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg;
+  }
+  
+  .btn-goodcrypto:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+  }
+  
+  .btn-secondary-goodcrypto {
+    @apply bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 border border-gray-700;
+  }
+  
+  /* Card Styles */
+  .card-goodcrypto {
+    @apply bg-[#0f1419] border border-gray-800 rounded-lg p-4 transition-all duration-200;
+  }
+  
+  .card-goodcrypto:hover {
+    @apply border-gray-700;
+  }
+  
+  /* Input Styles */
+  .input-goodcrypto {
+    @apply bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200;
+  }
+  
+  /* Navigation Item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 cursor-pointer;
+  }
+  
+  .nav-item:hover {
+    @apply bg-gray-800/50 text-white;
+  }
+  
+  .nav-item.active {
+    @apply bg-gray-800 text-white border-l-2 border-green-400;
+  }
+  
+  /* Token Input */
+  .token-input {
+    @apply bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-gray-600 transition-all duration-200;
+  }
+  
+  /* Price Display */
+  .price-positive {
+    @apply text-green-400;
+  }
+  
+  .price-negative {
+    @apply text-red-400;
+  }
+  
+  /* Status Indicator */
+  .status-dot {
+    @apply w-2 h-2 rounded-full animate-pulse;
+  }
+  
+  .status-dot.online {
+    @apply bg-green-400;
+  }
+  
+  .status-dot.offline {
+    @apply bg-red-400;
+  }
+}
+
+/* Professional Typography */
+.text-mono {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+}
+
+/* Gradient Text Effects */
+.text-gradient-green {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Loading States */
+.loading-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* Chart Styles */
+.chart-container {
+  @apply bg-[#0f1419] rounded-lg p-4;
+}
+
+.chart-tooltip {
+  @apply bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-xl;
+}
+
+/* Professional Hover Effects */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+}
+
+/* Utility Classes */
+.backdrop-blur-strong {
+  backdrop-filter: blur(20px);
+}
+
+.border-gradient {
+  border-image: linear-gradient(135deg, #10b981, #34d399) 1;
+}
+
+/* Toast Notifications */
+.Toastify__toast {
+  @apply bg-gray-800 text-white border border-gray-700;
+}
+
+.Toastify__toast--success {
+  @apply bg-green-900 border-green-700;
+}
+
+.Toastify__toast--error {
+  @apply bg-red-900 border-red-700;
+}
+
+.Toastify__toast--warning {
+  @apply bg-yellow-900 border-yellow-700;
+}
+
+.Toastify__toast--info {
+  @apply bg-blue-900 border-blue-700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar-mobile.open {
+    transform: translateX(0);
+  }
+}
+
+/* Dark Mode Optimizations */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    @apply bg-[#0a0e1a] text-white;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .card-goodcrypto {
+    @apply border-2 border-white;
+  }
+  
+  .btn-goodcrypto {
+    @apply border-2 border-black;
+  }
+}
+
+/* Selection Styles */
+::selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: white;
+}
+
+/* Custom Properties for Dynamic Theming */
+:root {
+  --primary-green: #10b981;
+  --primary-green-dark: #059669;
+  --background-primary: #0a0e1a;
+  --background-secondary: #0f1419;
+  --border-color: #374151;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Additional GoodCrypto Specific Styles */
+.goodcrypto-sidebar {
+  @apply w-64 bg-[#0f1419] border-r border-gray-800 flex flex-col;
+}
+
+.goodcrypto-header {
+  @apply bg-[#0f1419] border-b border-gray-800 px-6 py-4;
+}
+
+.goodcrypto-main {
+  @apply flex-1 bg-[#0a0e1a];
+}
+
+.goodcrypto-trading-panel {
+  @apply w-80 bg-[#0f1419] border-l border-gray-800 p-6;
+}
+
+.network-selector {
+  @apply flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors;
+}
+
+.price-display {
+  @apply text-2xl font-bold text-white font-mono;
+}
+
+.trading-tabs {
+  @apply flex gap-1 bg-gray-800 rounded-lg p-1;
+}
+
+.trading-tab {
+  @apply flex-1 py-2 px-3 rounded text-sm font-medium transition-all cursor-pointer;
+}
+
+.trading-tab.active {
+  @apply bg-gray-700 text-white;
+}
+
+.trading-tab:not(.active) {
+  @apply text-gray-400 hover:text-white;
+}
+
+
+/* CrossFlow AI Custom Animations */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3), 0 0 40px rgba(6, 182, 212, 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5), 0 0 60px rgba(6, 182, 212, 0.2);
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Glass Morphism Effects */
+.glass {
+  background: rgba(13, 17, 23, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-hover:hover {
+  background: rgba(13, 17, 23, 0.9);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 8px 32px rgba(6, 182, 212, 0.1);
+}
+
+/* Neon Glow Effects */
+.neon-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 40px rgba(6, 182, 212, 0.2), 0 0 60px rgba(6, 182, 212, 0.1);
+}
+
+.neon-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2), 0 0 60px rgba(16, 185, 129, 0.1);
+}
+
+.neon-purple {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2), 0 0 60px rgba(139, 92, 246, 0.1);
+}
+
+/* Gradient Borders */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(#030712, #030712) padding-box,
+              linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981) border-box;
+  border: 2px solid transparent;
+}
+
+/* Floating Button Styles */
+.floating-btn {
+  @apply fixed z-50 p-4 rounded-full shadow-2xl transform transition-all duration-300;
+}
+
+.floating-btn:hover {
+  @apply scale-110 -translate-y-1;
+}
+
+/* Chart Enhancements */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.05);
+}
+
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Custom Scrollbar for CrossFlow */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #06b6d4, #8b5cf6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #22d3ee, #a78bfa);
+}
+
+/* Selection Color */
+::selection {
+  background: rgba(6, 182, 212, 0.3);
+  color: white;
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Number Input Arrows Hidden */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

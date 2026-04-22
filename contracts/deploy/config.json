@@ -1,0 +1,208 @@
+{
+  "networks": {
+    "ethereum": {
+      "name": "Ethereum Mainnet",
+      "chainId": 1,
+      "rpcUrl": "https://eth-mainnet.g.alchemy.com/v2/",
+      "blockExplorer": "https://etherscan.io",
+      "governanceConfig": {
+        "members": [
+          "0x742d35Cc6634C0532925a3b8D4C9db96c4b4d8b6",
+          "0x8ba1f109551bD432803012645Hac136c22C177ec",
+          "0x1234567890123456789012345678901234567890"
+        ],
+        "threshold": 2,
+        "description": "2-of-3 multi-signature governance for Ethereum mainnet"
+      },
+      "deploymentConfig": {
+        "gasLimit": 8000000,
+        "gasPrice": "auto",
+        "verificationDelay": 300,
+        "confirmations": 2
+      },
+      "monitoring": {
+        "alertThresholds": {
+          "largeTransactionUSD": 100000,
+          "maxPendingTransactions": 5,
+          "maxCriticalEvents": 10
+        },
+        "webhooks": {
+          "discord": "",
+          "slack": "",
+          "telegram": ""
+        }
+      }
+    },
+    "arbitrum": {
+      "name": "Arbitrum One",
+      "chainId": 42161,
+      "rpcUrl": "https://arb-mainnet.g.alchemy.com/v2/",
+      "blockExplorer": "https://arbiscan.io",
+      "governanceConfig": {
+        "members": [
+          "0x742d35Cc6634C0532925a3b8D4C9db96c4b4d8b6",
+          "0x8ba1f109551bD432803012645Hac136c22C177ec",
+          "0x1234567890123456789012345678901234567890"
+        ],
+        "threshold": 2,
+        "description": "2-of-3 multi-signature governance for Arbitrum"
+      },
+      "deploymentConfig": {
+        "gasLimit": 8000000,
+        "gasPrice": "auto",
+        "verificationDelay": 60,
+        "confirmations": 1
+      },
+      "monitoring": {
+        "alertThresholds": {
+          "largeTransactionUSD": 100000,
+          "maxPendingTransactions": 5,
+          "maxCriticalEvents": 10
+        },
+        "webhooks": {
+          "discord": "",
+          "slack": "",
+          "telegram": ""
+        }
+      }
+    },
+    "sepolia": {
+      "name": "Sepolia Testnet",
+      "chainId": 11155111,
+      "rpcUrl": "https://eth-sepolia.g.alchemy.com/v2/",
+      "blockExplorer": "https://sepolia.etherscan.io",
+      "governanceConfig": {
+        "members": [
+          "0x742d35Cc6634C0532925a3b8D4C9db96c4b4d8b6",
+          "0x8ba1f109551bD432803012645Hac136c22C177ec"
+        ],
+        "threshold": 1,
+        "description": "1-of-2 multi-signature governance for testing"
+      },
+      "deploymentConfig": {
+        "gasLimit": 8000000,
+        "gasPrice": "auto",
+        "verificationDelay": 30,
+        "confirmations": 1
+      },
+      "monitoring": {
+        "alertThresholds": {
+          "largeTransactionUSD": 1000,
+          "maxPendingTransactions": 10,
+          "maxCriticalEvents": 20
+        },
+        "webhooks": {
+          "discord": "",
+          "slack": "",
+          "telegram": ""
+        }
+      }
+    },
+    "arbitrumSepolia": {
+      "name": "Arbitrum Sepolia",
+      "chainId": 421614,
+      "rpcUrl": "https://arb-sepolia.g.alchemy.com/v2/",
+      "blockExplorer": "https://sepolia.arbiscan.io",
+      "governanceConfig": {
+        "members": [
+          "0x742d35Cc6634C0532925a3b8D4C9db96c4b4d8b6",
+          "0x8ba1f109551bD432803012645Hac136c22C177ec"
+        ],
+        "threshold": 1,
+        "description": "1-of-2 multi-signature governance for testing"
+      },
+      "deploymentConfig": {
+        "gasLimit": 8000000,
+        "gasPrice": "auto",
+        "verificationDelay": 30,
+        "confirmations": 1
+      },
+      "monitoring": {
+        "alertThresholds": {
+          "largeTransactionUSD": 1000,
+          "maxPendingTransactions": 10,
+          "maxCriticalEvents": 20
+        },
+        "webhooks": {
+          "discord": "",
+          "slack": "",
+          "telegram": ""
+        }
+      }
+    }
+  },
+  "contracts": {
+    "SmartEscrowUpgradeable": {
+      "version": "1.0.0",
+      "description": "Upgradeable smart escrow contract for cross-chain trade settlement",
+      "features": [
+        "UUPS proxy pattern",
+        "Multi-signature governance",
+        "Emergency pause functionality",
+        "Automatic refunds on timeout",
+        "Solver authorization system"
+      ]
+    },
+    "MultiSigWallet": {
+      "version": "1.0.0",
+      "description": "Multi-signature wallet for governance operations",
+      "features": [
+        "Multiple owner support",
+        "Configurable signature threshold",
+        "Transaction proposal system",
+        "Owner management"
+      ]
+    }
+  },
+  "security": {
+    "auditStatus": "pending",
+    "auditFirms": [],
+    "bugBountyProgram": false,
+    "emergencyContacts": [
+      "security@crossflow.ai"
+    ],
+    "incidentResponse": {
+      "pauseContract": true,
+      "notifyUsers": true,
+      "escalationPath": [
+        "Development Team",
+        "Security Team",
+        "Governance Council"
+      ]
+    }
+  },
+  "deployment": {
+    "phases": [
+      {
+        "phase": 1,
+        "description": "Testnet deployment and testing",
+        "networks": ["sepolia", "arbitrumSepolia"],
+        "requirements": [
+          "Complete unit tests",
+          "Property-based tests passing",
+          "Integration tests passing"
+        ]
+      },
+      {
+        "phase": 2,
+        "description": "Mainnet deployment with limited functionality",
+        "networks": ["ethereum", "arbitrum"],
+        "requirements": [
+          "Testnet validation complete",
+          "Security audit complete",
+          "Governance approval"
+        ]
+      },
+      {
+        "phase": 3,
+        "description": "Full production deployment",
+        "networks": ["ethereum", "arbitrum"],
+        "requirements": [
+          "Limited deployment successful",
+          "No critical issues found",
+          "Community feedback incorporated"
+        ]
+      }
+    ]
+  }
+}
