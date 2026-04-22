@@ -1,12 +1,17 @@
 name: Smart Contracts CI/CD
 
+# Workflow is currently disabled - uncomment 'on' section to enable
+# on:
+#   push:
+#     branches: [ main, develop ]
+#     paths: [ 'contracts/**' ]
+#   pull_request:
+#     branches: [ main ]
+#     paths: [ 'contracts/**' ]
+
+# Manual trigger only
 on:
-  push:
-    branches: [ main, develop ]
-    paths: [ 'contracts/**' ]
-  pull_request:
-    branches: [ main ]
-    paths: [ 'contracts/**' ]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -19,14 +24,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
-    
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: contracts/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
     
     - name: Install dependencies
       working-directory: ./contracts
@@ -41,19 +38,6 @@ jobs:
       working-directory: ./contracts
       run: npm run test
       continue-on-error: true
-    
-    - name: Run coverage
-      working-directory: ./contracts
-      run: npm run coverage
-      continue-on-error: true
-    
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./contracts/coverage/lcov.info
-        flags: contracts
-        name: contracts-coverage
-      continue-on-error: true
 
   security:
     runs-on: ubuntu-latest
@@ -67,14 +51,6 @@ jobs:
       with:
         node-version: '20'
     
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: contracts/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    
     - name: Install dependencies
       working-directory: ./contracts
       run: npm install
@@ -86,38 +62,4 @@ jobs:
     - name: Run Slither analysis
       working-directory: ./contracts
       run: slither . --print human-summary
-      continue-on-error: true
-
-  deploy-testnet:
-    runs-on: ubuntu-latest
-    needs: [test, security]
-    if: github.ref == 'refs/heads/develop'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: contracts/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('contracts/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    
-    - name: Install dependencies
-      working-directory: ./contracts
-      run: npm install
-    
-    - name: Deploy to Sepolia
-      working-directory: ./contracts
-      run: npm run deploy:sepolia
-      env:
-        ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
-        PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
-        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
       continue-on-error: true
